@@ -1,0 +1,85 @@
+name: Collect Ports ZIPs
+
+on:
+  schedule:
+    - cron: '0 */12 * * *'  # Runs every 12 hours
+  workflow_dispatch:
+  push:
+    paths:
+      - 'ports/released/**'
+      - 'docs/ports.json'
+
+jobs:
+  build-and-release:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
+    steps:
+      # ------------------------------------------------------
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      # ------------------------------------------------------
+      - name: Prepare environment
+        run: |
+          mkdir -p temp_ports
+          touch .github/ports_hashes.json
+
+      # ------------------------------------------------------
+      - name: Calculate MD5 and zip changed ports
+        id: zipports
+        run: |
+          cp .github/ports_hashes.json old_hashes.json
+          cp old_hashes.json new_hashes.json
+
+          # Recursively find all directories under ports/released
+          find ports/released -type d | while read dir; do
+            # Skip root folder itself
+            [ "$dir" = "ports/released" ] && continue
+
+            # -----------------------------
+            # Valid port check
+            # -----------------------------
+            [ -f "$dir/port.json" ] || continue
+            if ! ls "$dir"/screenshot.{png,jpg,jpeg} 1> /dev/null 2>&1; then
+                continue
+            fi
+
+            zipname=$(basename "$dir")
+
+            # Compute combined MD5 of all files
+            new_md5=$(find "$dir" -type f -exec md5sum {} + | sort | md5sum | awk '{print $1}')
+            old_md5=$(jq -r --arg n "$zipname" '.[$n] // ""' old_hashes.json)
+
+            if [ "$new_md5" != "$old_md5" ]; then
+                echo "→ Change detected in $dir"
+                zip -r -q "temp_ports/${zipname}.zip" "$dir"
+            fi
+
+            # Update new hash
+            jq --arg n "$zipname" --arg m "$new_md5" '. + {($n): $m}' new_hashes.json > tmp.json && mv tmp.json new_hashes.json
+          done
+
+          # Replace old hashes with new
+          mv new_hashes.json .github/ports_hashes.json
+
+      # ------------------------------------------------------
+      - name: Commit updated hashes
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add .github/ports_hashes.json
+          git commit -m "Update port hashes [ci skip]" || echo "No changes to commit"
+          git push
+
+      # ------------------------------------------------------
+      - name: Upload changed zips to release
+        if: success()
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: ports-latest
+          name: Ports
+          overwrite_files: true
+          generate_release_notes: false
+          files: temp_ports/*.zip

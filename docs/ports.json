@@ -3281,15 +3281,15 @@
       "min_glibc": null
     },
     "source": {
-      "screenshot_url": "https://raw.githubusercontent.com/JeodC/RHH-Ports/main/ports/released/harbourmasters/soh/soh/screenshot.png",
-      "readme_url": "https://raw.githubusercontent.com/JeodC/RHH-Ports/main/ports/released/harbourmasters/soh/soh/README.md",
-      "download_url": "https://github.com/JeodC/RHH-Ports/releases/download/ports-latest/soh.zip",
-      "date_updated": "2026-06-04T16:18",
+      "screenshot_url": "https://raw.githubusercontent.com/Dima353/RHH-Ports/main/ports/released/harbourmasters/soh/soh/screenshot.png",
+      "readme_url": "https://raw.githubusercontent.com/Dima353/RHH-Ports/main/ports/released/harbourmasters/soh/soh/README.md",
+      "download_url": "https://github.com/Dima353/RHH-Ports/releases/download/ports-latest/soh.zip",
+      "date_updated": "2026-06-12T23:07",
       "first_seen": "2025-11-11",
-      "md5": "22e6de1c6228c379d3ce772611da7353",
-      "size": 51020825,
+      "md5": "52b77117e57fc2214a18695b4b0705aa",
+      "size": 51690372,
       "lifetime_downloads": 116,
-      "last_commit": "[HARBOURMASTERS] Rebuild libzip without libcrypto"
+      "last_commit": "[SOH] Update to 9.2.3"
     }
   },
   {

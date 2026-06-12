@@ -3330,12 +3330,12 @@
       "screenshot_url": "https://raw.githubusercontent.com/Dima353/RHH-Ports/main/ports/released/harbourmasters/soh2/soh2/screenshot.png",
       "readme_url": "https://raw.githubusercontent.com/Dima353/RHH-Ports/main/ports/released/harbourmasters/soh2/soh2/README.md",
       "download_url": "https://github.com/Dima353/RHH-Ports/releases/download/ports-latest/soh2.zip",
-      "date_updated": "2026-06-12T18:57",
+      "date_updated": "2026-06-12T21:13",
       "first_seen": "2025-11-11",
-      "md5": "7f2b9e4ff7c1c2c2e8e4fdb2c82ff22a",
-      "size": 14148908,
-      "lifetime_downloads": 118,
-      "last_commit": "[SOH2] Update to 620b785"
+      "md5": "583c1c71a79ce2271f9811e9ea136fd0",
+      "size": 14351899,
+      "lifetime_downloads": 119,
+      "last_commit": "[SOH2] Update to 4.0.2"
     }
   },
   {

@@ -1,7 +1,7 @@
 set -e
 source /root/buildtools/harbourmasters/lib_build.sh
 
-project_clone https://github.com/Dima353/2ship2harkinian-Rus.git -b develop
+project_clone https://github.com/Dima353/2ship2harkinian-Rus.git
 
 # See SoH build.txt for the rationale on building SDL2 from source but not
 # shipping libSDL2 to devices.
